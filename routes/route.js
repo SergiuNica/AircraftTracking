@@ -10,4 +10,8 @@ router.get('/api', (req, res) => {
     res.sendFile(path.join(__dirname, '/inc/convertedAirports.json'));
 });
 
+router.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '/inc/convertedAirports.json'));
+});
+
 module.exports = router;

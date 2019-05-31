@@ -9,6 +9,24 @@
 	<link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css" rel="stylesheet" />
 	<script src="js/map.js" type="application/javascript"></script>
 	<link href="css/style.css" rel="stylesheet" />
+	<script>
+		const username = "root";
+		const password = "pass";
+
+		const login = username + ":" + password;
+		const encodedLogin = btoa(login);
+		//console.log(encodedLogin);
+
+		(async () => {
+			const response = await fetch("http://localhost:9000/getUser", {
+				headers: {
+					Authorization: `Basic:${encodedLogin}`
+				}
+			});
+			const responseJson = respomse.json();
+			console.log(responseJson);
+		})
+	</script>
 </head>
 
 <body>

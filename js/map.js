@@ -1,16 +1,18 @@
 mapboxgl.accessToken =
   "pk.eyJ1Ijoic2t5aGF3azExMSIsImEiOiJjanc2aHh1MjExN2puM3lvbXR3cnQ2azNsIn0.kDVQHMKTbDrEyAg7qX638w";
 
-const geoIp =
-  "https://api.ipgeolocation.io/ipgeo?apiKey=c5cf2ce7b84842edb900939c4065f4ca";
+const geoIp = "https://api.ipgeolocation.io/ipgeo?apiKey=c5cf2ce7b84842edb900939c4065f4ca";
 
-const geocodeURI = address => {
-  return (
-    "https://api.opencagedata.com/geocode/v1/json?q=" +
-    address +
-    "&key=290988e010e04ca7a0691468f18b3ce1"
-  );
-};
+const mapboxStyle = "mapbox://styles/skyhawk111/cjw6lsav93wm91cnw4ela3dy3";
+
+
+// const geocodeURI = address => {
+//   return (
+//     "https://api.opencagedata.com/geocode/v1/json?q=" +
+//     address +
+//     "&key=290988e010e04ca7a0691468f18b3ce1"
+//   );
+// };
 
 let map = null;
 let locInfo = null;
@@ -25,7 +27,6 @@ const centerOnUser = async () => {
     map.easeTo({
       center: loc
     });
-
     return mapInfoJSON;
   }
 };
@@ -48,18 +49,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       // console.log(geocodeURI(address));
       const data = await fetch(geocodeURI(address));
       const dataJson = await data.json();
-      console.log(dataJson);
+      //console.log(dataJson);
       if (dataJson.results.length >= 1) {
         const geo = dataJson.results[0].geometry;
-        console.log(geo);
+        //console.log(geo);
         map.easeTo({
           center: [geo.lng, geo.lat]
         });
       }
     }
   });
-
-
 
   document.getElementById("easeToToronto").addEventListener("click", async () => {
     loading.style.display = "block";
@@ -75,14 +74,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     //     console.log(err);
     //   });
 
-    const data = await fetch(geocodeURI("Toronto"));
+    let lat = toronto.lat;
+    let lng = toronto.lng;
+    const mapedAirport = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + lat + "," + long +
+      ".json?types=poi&access_token=pk.eyJ1Ijoic2t5aGF3azExMSIsImEiOiJjanc2aHh1MjExN2puM3lvbXR3cnQ2azNsIn0.kDVQHMKTbDrEyAg7qX638w"
+
+    const data = await fetch(mapedAirport);
     const dataJson = await data.json();
-    // console.log(dataJson);
+    console.log(dataJson);
+
     //const toronto = dataJson.results[0].geometry;
-    const torlat = dataJson;
+    const toronto = dataJson.results[0].geometry;
     // for (var i = 193; i < data.length; i++) {
     var div = document.createElement("div");
-    div.innerHTML = 'Toronto Airport: ' + data[192, 6] + ' and ' + data[192, 7];
+    div.innerHTML = 'Toronto Airport: ' + toronto.lat[193] + ' and ' + toronto.lng[193];
     mainContainer.appendChild(div);
     //}
 
